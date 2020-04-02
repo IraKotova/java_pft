@@ -5,54 +5,55 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
 public class GroupCreationTests {
-  private WebDriver wd;
+  private WebDriver driver;
 
-  @BeforeMethod(alwaysRun = true)
+  @BeforeClass(alwaysRun = true)
   public void setUp() throws Exception {
-    wd = new FirefoxDriver();
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    wd.get("http://localhost/addressbook/group.php");
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys("admin");
-    wd.findElement(By.name("pass")).click();
-    wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys("secret");
-    wd.findElement(By.xpath("//input[@value='Login']")).click();
+    driver = new FirefoxDriver();
+    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testGroupCreation() throws Exception {
-    wd.findElement(By.name("new")).click();
-    wd.findElement(By.name("group_name")).click();
-    wd.findElement(By.name("group_name")).clear();
-    wd.findElement(By.name("group_name")).sendKeys("test1");
-    wd.findElement(By.name("group_header")).click();
-    wd.findElement(By.name("group_header")).clear();
-    wd.findElement(By.name("group_header")).sendKeys("test2");
-    wd.findElement(By.name("group_footer")).click();
-    wd.findElement(By.name("group_footer")).clear();
-    wd.findElement(By.name("group_footer")).sendKeys("test3");
-    wd.findElement(By.name("submit")).click();
-    wd.findElement(By.linkText("group page")).click();
-    wd.findElement(By.linkText("Logout")).click();
+  public void testGroupCreationTests() throws Exception {
+    driver.get("http://localhost/addressbook/");
+    driver.findElement(By.name("user")).click();
+    driver.findElement(By.name("user")).clear();
+    driver.findElement(By.name("user")).sendKeys("admin");
+    driver.findElement(By.name("pass")).click();
+    driver.findElement(By.name("pass")).clear();
+    driver.findElement(By.name("pass")).sendKeys("secret");
+    driver.findElement(By.xpath("//input[@value='Login']")).click();
+    driver.findElement(By.linkText("groups")).click();
+    driver.findElement(By.name("new")).click();
+    driver.findElement(By.name("group_name")).click();
+    driver.findElement(By.name("group_name")).clear();
+    driver.findElement(By.name("group_name")).sendKeys("test1");
+    driver.findElement(By.name("group_header")).click();
+    driver.findElement(By.name("group_header")).clear();
+    driver.findElement(By.name("group_header")).sendKeys("test2");
+    driver.findElement(By.name("group_footer")).click();
+    driver.findElement(By.name("group_footer")).clear();
+    driver.findElement(By.name("group_footer")).sendKeys("test3");
+    driver.findElement(By.name("submit")).click();
+    driver.findElement(By.linkText("groups")).click();
+    driver.findElement(By.linkText("Logout")).click();
   }
 
-  @AfterMethod(alwaysRun = true)
+  @AfterClass(alwaysRun = true)
   public void tearDown() throws Exception {
-    wd.quit();
+    driver.quit();
   }
 
   private boolean isElementPresent(By by) {
     try {
-      wd.findElement(by);
+      driver.findElement(by);
       return true;
     } catch (NoSuchElementException e) {
       return false;
@@ -61,10 +62,10 @@ public class GroupCreationTests {
 
   private boolean isAlertPresent() {
     try {
-      wd.switchTo().alert();
+      driver.switchTo().alert();
       return true;
     } catch (NoAlertPresentException e) {
       return false;
     }
   }
-}
+ }
