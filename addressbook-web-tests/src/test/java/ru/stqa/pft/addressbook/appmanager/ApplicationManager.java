@@ -19,6 +19,8 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
 
     public void init() {
+      //  String browser = BrowserType.MOZILLA;
+     //   if (browser == BrowserType.MOZILLA)
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");

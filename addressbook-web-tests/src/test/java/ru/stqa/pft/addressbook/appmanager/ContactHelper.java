@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.UpdateContactData;
 
 public class ContactHelper extends HelperBase{
 
@@ -67,5 +68,17 @@ public class ContactHelper extends HelperBase{
 
     public void closeConfirmContact() {
         wd.findElement(By.cssSelector("div.msgbox"));
+    }
+
+    public void updateContactForm(UpdateContactData updateContactData) {
+        typecontact(By.name("firstname"), updateContactData.getName());
+        typecontact(By.name("lastname"), updateContactData.getSurname());
+        typecontact(By.name("title"), updateContactData.getJobtitle());
+        typecontact(By.name("company"), updateContactData.getCompanyname());
+        typecontact(By.name("home"), updateContactData.getPhone());
+        typecontact(By.name("email"), updateContactData.getEmail());
+        clickcontact(By.name("bday"), updateContactData.getDay());
+        clickcontact(By.name("bmonth"), updateContactData.getMonth());
+        typecontact(By.name("byear"), updateContactData.getYear());
     }
 }
