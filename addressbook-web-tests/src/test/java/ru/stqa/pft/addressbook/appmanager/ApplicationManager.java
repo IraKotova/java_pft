@@ -12,7 +12,7 @@ import org.openqa.selenium.remote.BrowserType;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-    WebDriver wd = new FirefoxDriver();
+    WebDriver wd;
 
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
@@ -41,8 +41,6 @@ public class ApplicationManager {
         contactHelper = new ContactHelper(wd);
         sessionHelper.login("admin", "secret");
     }
-
-
 
     public void stop() {
         wd.quit();
