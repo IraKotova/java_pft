@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.UpdateContactData;
 
@@ -16,7 +17,7 @@ public class ContactHelper extends HelperBase{
       wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         typecontact(By.name("firstname"), contactData.getName());
         typecontact(By.name("lastname"), contactData.getSurname());
         typecontact(By.name("title"), contactData.getJobtitle());
@@ -27,12 +28,25 @@ public class ContactHelper extends HelperBase{
         clickcontact(By.name("bmonth"), contactData.getMonth());
         typecontact(By.name("byear"), contactData.getYear());
         clickcontact(By.name("new_group"), contactData.getGroup());
+
+    if (creation){
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
     }
 
     private void clickcontact(By locator, String param) {
         wd.findElement(locator).click();
         new Select(wd.findElement(locator)).selectByVisibleText(param);
         wd.findElement(locator).click();
+    }
+
+    public void returnToHomePage() {
+        if (isElementPresent(By.id("maintable"))){
+            return;
+        }
+        click(By.linkText("home"));
     }
 
     private void typecontact(By locator, String text) {
@@ -80,5 +94,16 @@ public class ContactHelper extends HelperBase{
         clickcontact(By.name("bday"), updateContactData.getDay());
         clickcontact(By.name("bmonth"), updateContactData.getMonth());
         typecontact(By.name("byear"), updateContactData.getYear());
+    }
+
+    public void createContact(ContactData contactData, boolean b) {
+        initContactCreation();
+        fillContactForm(new ContactData("Ivan", "Ivanov", "tester", "Testcom", "8123456789", "test@test.com", "1", "February", "1990", "test1"),true);
+        submitNewContact();
+        returnToHomePage();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
