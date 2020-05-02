@@ -37,9 +37,10 @@ public class ContactHelper extends HelperBase{
     }
 
     private void clickcontact(By locator, String param) {
-        wd.findElement(locator).click();
-        new Select(wd.findElement(locator)).selectByVisibleText(param);
-        wd.findElement(locator).click();
+        if (param != null) {
+            new Select(wd.findElement(locator)).selectByVisibleText(param);
+            wd.findElement(locator).click();
+        }
     }
 
     public void returnToHomePage() {
