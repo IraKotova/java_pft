@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
+    private int id;
     private final String name;
     private final String surname;
     private final String jobtitle;
@@ -13,6 +14,7 @@ public class ContactData {
     private final String group;
 
     public ContactData(String name, String surname, String jobtitle, String companyname, String phone, String email, String day, String month, String year, String group) {
+        this.id = Integer.MAX_VALUE;
         this.name = name;
         this.surname = surname;
         this.jobtitle = jobtitle;
@@ -23,6 +25,23 @@ public class ContactData {
         this.month = month;
         this.year = year;
         this.group = group;
+    }
+    public ContactData(int id, String name, String surname, String jobtitle, String companyname, String phone, String email, String day, String month, String year, String group) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.jobtitle = jobtitle;
+        this.companyname = companyname;
+        this.phone = phone;
+        this.email = email;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.group = group;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -63,5 +82,37 @@ public class ContactData {
 
     public String getGroup() {
         return group;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return surname != null ? surname.equals(that.surname) : that.surname == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        return result;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
