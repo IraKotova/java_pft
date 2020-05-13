@@ -113,6 +113,13 @@ public class ContactHelper extends HelperBase{
         returnToHomePage();
     }
 
+    public void modifyContact(int index, ContactData contact) {
+        selectContact(index);
+        fillContactForm(contact,false);
+        submitContactModification();
+        returnToHomePage();
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
@@ -123,12 +130,15 @@ public class ContactHelper extends HelperBase{
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("tr"));
-        for (WebElement element : elements) {
-            String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData(id, name, null,null,null,null,null,null,null,null,null);
-            contacts.add(contact);
+        List<WebElement> elements = wd.findElements(By.cssSelector("entry"));
+        for (WebElement cell : elements) {
+            List<WebElement> cells = cell.findElements(By.cssSelector("td"));
+                String name = cells.get(1).getText();
+                String surname = cells.get(2).getText();
+                int id1 = Integer.parseInt(cell.findElements(By.tagName("input")).get(1).getAttribute("value"));
+                int id2 = Integer.parseInt(cell.findElements(By.tagName("input")).get(2).getAttribute("value"));
+                ContactData contact = new ContactData(name, surname, null, null, null, null, null, null, null, null);
+                contacts.add(contact);
         }
         return contacts;
     }
