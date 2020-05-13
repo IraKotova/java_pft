@@ -115,6 +115,7 @@ public class ContactHelper extends HelperBase{
 
     public void modifyContact(int index, ContactData contact) {
         selectContact(index);
+        initContactModification();
         fillContactForm(contact,false);
         submitContactModification();
         returnToHomePage();
