@@ -106,19 +106,25 @@ public class ContactHelper extends HelperBase{
         typecontact(By.name("byear"), updateContactData.getYear());
     }
 
-    public void createContact(ContactData contactData, boolean b) {
+    public void create(ContactData contactData, boolean b) {
         initContactCreation();
         fillContactForm(new ContactData("Ivan", "Ivanov", "tester", "Testcom", "8123456789", "test@test.com", "1", "February", "1990", "test1"),true);
         submitNewContact();
         returnToHomePage();
     }
 
-    public void modifyContact(int index, ContactData contact) {
+    public void modify(int index, ContactData contact) {
         selectContact(index);
         initContactModification();
         fillContactForm(contact,false);
         submitContactModification();
         returnToHomePage();
+    }
+    public void delete() {
+        selectContact(0);
+        deleteSelectedContact();
+        confirmDeletionContact();
+        closeConfirmContact();
     }
 
     public boolean isThereAContact() {
@@ -129,16 +135,15 @@ public class ContactHelper extends HelperBase{
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.cssSelector("entry"));
         for (WebElement cell : elements) {
             List<WebElement> cells = cell.findElements(By.cssSelector("td"));
                 String name = cells.get(1).getText();
                 String surname = cells.get(2).getText();
-                int id1 = Integer.parseInt(cell.findElements(By.tagName("input")).get(1).getAttribute("value"));
-                int id2 = Integer.parseInt(cell.findElements(By.tagName("input")).get(2).getAttribute("value"));
-                ContactData contact = new ContactData(name, surname, null, null, null, null, null, null, null, null);
+                int id = Integer.parseInt(cell.findElements(By.tagName("input")).get(0).getAttribute("value"));
+                ContactData contact = new ContactData(id, name, surname, null, null, null, null, null, null, null, null);
                 contacts.add(contact);
         }
         return contacts;
