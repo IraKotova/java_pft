@@ -69,8 +69,8 @@ public class ContactHelper extends HelperBase{
       wd.findElement(By.linkText("add new")).click();
     }
 
-    public void initContactModification() {
-        click(By.cssSelector("img[alt=\"Edit\"]"));
+    public void initContactModification(int index) {
+        wd.findElements(By.name("edit")).get(index).click();
     }
 
     public void submitContactModification() {
@@ -108,20 +108,22 @@ public class ContactHelper extends HelperBase{
 
     public void create(ContactData contactData, boolean b) {
         initContactCreation();
-        fillContactForm(new ContactData("Ivan", "Ivanov", "tester", "Testcom", "8123456789", "test@test.com", "1", "February", "1990", "test1"),true);
+        fillContactForm(new ContactData().
+                withName("Ivan").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withPhone("8123456789").withEmail("test@test.com").
+                withDay("1").withMonth("February").withYear("1990").withGroup("test1"),true);
         submitNewContact();
         returnToHomePage();
     }
 
     public void modify(int index, ContactData contact) {
         selectContact(index);
-        initContactModification();
+        initContactModification(index);
         fillContactForm(contact,false);
         submitContactModification();
         returnToHomePage();
     }
-    public void delete() {
-        selectContact(0);
+    public void delete(int index) {
+        selectContact(index);
         deleteSelectedContact();
         confirmDeletionContact();
         closeConfirmContact();
@@ -140,10 +142,10 @@ public class ContactHelper extends HelperBase{
         List<WebElement> elements = wd.findElements(By.cssSelector("entry"));
         for (WebElement cell : elements) {
             List<WebElement> cells = cell.findElements(By.cssSelector("td"));
+                int id = Integer.parseInt(cell.findElements(By.tagName("input")).get(0).getAttribute("value"));
                 String name = cells.get(1).getText();
                 String surname = cells.get(2).getText();
-                int id = Integer.parseInt(cell.findElements(By.tagName("input")).get(0).getAttribute("value"));
-                ContactData contact = new ContactData(id, name, surname, null, null, null, null, null, null, null, null);
+                ContactData contact = new ContactData().withId(id).withName(name).withSurname(surname);
                 contacts.add(contact);
         }
         return contacts;
