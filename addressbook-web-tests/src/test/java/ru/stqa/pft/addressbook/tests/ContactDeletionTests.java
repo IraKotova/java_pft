@@ -12,7 +12,7 @@ import static org.testng.Assert.assertEquals;
 public class ContactDeletionTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
-        if (app.contact().list().size() == 0){
+        if (app.contact().all().size() == 0){
             app.contact().create(new ContactData().
                     withName("Ivan").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withPhone("8123456789").withEmail("test@test.com").
                     withDay("1").withMonth("February").withYear("1990").withGroup("test1"),true);
