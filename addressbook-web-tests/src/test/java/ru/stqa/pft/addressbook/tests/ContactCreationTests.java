@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase{
 
-  @Test (enabled = false)
+  @Test (enabled = true)
   public void testContactCreation() throws Exception {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().
@@ -17,10 +17,21 @@ public class ContactCreationTests extends TestBase{
             withDay("1").withMonth("February").withYear("1990").withGroup("test1");
     app.contact().create(contact,true);
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size() + 1));
-
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
 //    contact.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+  }
+
+  @Test (enabled = false)
+  public void testBadContactCreation() throws Exception {
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData().
+            withName("Ivan'").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withPhone("8123456789").withEmail("test@test.com").
+            withDay("1").withMonth("February").withYear("1990").withGroup("test1");
+    app.contact().create(contact,true);
+    assertThat(app.contact().count(), equalTo(before.size()));
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(before));
   }
 }
