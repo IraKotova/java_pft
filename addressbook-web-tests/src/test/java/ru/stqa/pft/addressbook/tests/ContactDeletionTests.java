@@ -11,6 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactDeletionTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
+        app.goTo().homePage();
         if (app.contact().all().size() == 0){
             app.contact().create(new ContactData().
                     withName("Ivan").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withPhone("8123456789").withEmail("test@test.com").

@@ -116,9 +116,7 @@ public class ContactHelper extends HelperBase {
 
     public void create(ContactData contactData, boolean b) {
         initContactCreation();
-        fillContactForm(new ContactData().
-                withName("Ivan").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withPhone("8123456789").withEmail("test@test.com").
-                withDay("1").withMonth("February").withYear("1990").withGroup("test1"), true);
+        fillContactForm(contactData, true);
         submitNewContact();
         contactCache = null;
         returnToHomePage();
