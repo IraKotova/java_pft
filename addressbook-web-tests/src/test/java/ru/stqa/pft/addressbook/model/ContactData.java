@@ -201,15 +201,7 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
-/*        if (jobtitle != null ? !jobtitle.equals(that.jobtitle) : that.jobtitle != null) return false;
-        if (companyname != null ? !companyname.equals(that.companyname) : that.companyname != null) return false;
-        if (home != null ? !home.equals(that.home) : that.home != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (day != null ? !day.equals(that.day) : that.day != null) return false;
-        if (month != null ? !month.equals(that.month) : that.month != null) return false;
-        if (year != null ? !year.equals(that.year) : that.year != null) return false;*/
-        return group != null ? group.equals(that.group) : that.group == null;
+        return surname != null ? surname.equals(that.surname) : that.surname == null;
     }
 
     @Override
@@ -217,14 +209,6 @@ public class ContactData {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (jobtitle != null ? jobtitle.hashCode() : 0);
-        result = 31 * result + (companyname != null ? companyname.hashCode() : 0);
-        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-        result = 31 * result + (email1 != null ? email1.hashCode() : 0);
-        result = 31 * result + (day != null ? day.hashCode() : 0);
-        result = 31 * result + (month != null ? month.hashCode() : 0);
-        result = 31 * result + (year != null ? year.hashCode() : 0);
-        result = 31 * result + (group != null ? group.hashCode() : 0);
         return result;
     }
 }
