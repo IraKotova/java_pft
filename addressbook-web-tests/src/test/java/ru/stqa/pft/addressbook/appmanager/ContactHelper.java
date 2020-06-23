@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.UpdateContactData;
 
 import java.util.List;
 
@@ -27,11 +26,16 @@ public class ContactHelper extends HelperBase {
         typecontact(By.name("title"), contactData.getJobtitle());
         typecontact(By.name("company"), contactData.getCompanyname());
         typecontact(By.name("home"), contactData.getHomePhone());
-        typecontact(By.name("email"), contactData.getEmail1());
+        typecontact(By.name("mobile"), contactData.getMobilePhone());
+        typecontact(By.name("work"), contactData.getWorkPhone());
+        typecontact(By.name("emaill"), contactData.getEmail1());
+        typecontact(By.name("email2"), contactData.getEmail2());
+        typecontact(By.name("email3"), contactData.getEmail3());
         clickcontact(By.name("bday"), contactData.getDay());
         clickcontact(By.name("bmonth"), contactData.getMonth());
         typecontact(By.name("byear"), contactData.getYear());
         clickcontact(By.name("new_group"), contactData.getGroup());
+        attach(By.name("photo"), contactData.getPhoto());
 
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -100,18 +104,6 @@ public class ContactHelper extends HelperBase {
 
     public void closeConfirmContact() {
         wd.findElement(By.cssSelector("div.msgbox"));
-    }
-
-    public void updateContactForm(UpdateContactData updateContactData) {
-        typecontact(By.name("firstname"), updateContactData.getName());
-        typecontact(By.name("lastname"), updateContactData.getSurname());
-        typecontact(By.name("title"), updateContactData.getJobtitle());
-        typecontact(By.name("company"), updateContactData.getCompanyname());
-        typecontact(By.name("home"), updateContactData.getPhone());
-        typecontact(By.name("email"), updateContactData.getEmail());
-        clickcontact(By.name("bday"), updateContactData.getDay());
-        clickcontact(By.name("bmonth"), updateContactData.getMonth());
-        typecontact(By.name("byear"), updateContactData.getYear());
     }
 
     public void create(ContactData contactData, boolean b) {

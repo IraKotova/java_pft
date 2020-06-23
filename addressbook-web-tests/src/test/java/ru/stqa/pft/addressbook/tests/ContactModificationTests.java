@@ -15,8 +15,13 @@ public class ContactModificationTests extends TestBase {
         app.goTo().homePage();
         if (app.contact().all().size() == 0){
             app.contact().create(new ContactData().
-                    withName("Makar").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withHomePhone("8123456789").withEmail1("test@test.com").
-                    withDay("1").withMonth("February").withYear("1990").withGroup("test1"),true);
+                    withName("Makar").withSurname("Ivanov")
+                    .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
+                    //.withAddress("123 Street House")
+                   // .withEmail1("test@test.com").withEmail2("test2@").withEmail3("test")
+                    .withDay("1").withMonth("February").withYear("1990")
+                    .withGroup("test1"),true);
+
         }
     }
 
