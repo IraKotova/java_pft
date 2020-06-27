@@ -190,14 +190,16 @@ public class ContactHelper extends HelperBase {
             String name = cells.get(2).getText();
             String surname = cells.get(1).getText();
 //            String[] phones = cells.get(5).getText().split("\n");
-            String allPhones = cells.get(5).getText();
-            String address = cells.get(3).getText();
-            String[] emails = cells.get(4).getText().split("\n");
+//            String allPhones = cells.get(5).getText();
+//            String address = cells.get(3).getText();
+//            String[] emails = cells.get(4).getText().split("\n");
 //            String allEmails = cells.get(4).getText();
-            contactCache.add(new ContactData().withId(id).withName(name).withSurname(surname)
+            contactCache.add(new ContactData()
+                    .withId(id)
+                    .withName(name).withSurname(surname));
 //                    .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
-                    .withAllPhones(allPhones).withAddress(address)
-                    .withEmail1(emails[0]).withEmail2(emails[1]).withEmail3(emails[2]));
+//                    .withAllPhones(allPhones).withAddress(address)
+//                    .withEmail1(emails[0]).withEmail2(emails[1]).withEmail3(emails[2]));
         }
         return new Contacts(contactCache);
     }
