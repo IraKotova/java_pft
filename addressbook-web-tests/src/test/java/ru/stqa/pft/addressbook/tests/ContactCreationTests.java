@@ -13,8 +13,9 @@ public class ContactCreationTests extends TestBase{
 
   @Test (enabled = true)
   public void testContactCreation() throws Exception {
-    File photo = new File("src/test/resources/avatar.jpg");
+
     Contacts before = app.contact().all();
+    File photo = new File("src/test/resources/avatar.png");
     ContactData contact = new ContactData().
             withName("Ivan").withSurname("Ivanov")
             .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
@@ -44,5 +45,11 @@ public class ContactCreationTests extends TestBase{
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before));
+  }
+
+  @Test (enabled = false)
+    public void testCurrDir() {
+      File currDir = new File (".");
+      System.out.println(currDir.getAbsolutePath());
   }
 }
