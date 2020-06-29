@@ -52,17 +52,17 @@ public class ContactDataGenerator {
         xstream.processAnnotations(ContactData.class);
         xstream.alias("contact",ContactData.class);
         String xml = xstream.toXML(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
-        Writer writer = new FileWriter(file);
-        for (ContactData contact : contacts){
-            writer.write(String.format("%s;%s;%s\n", contact.getName(),contact.getSurname(),contact.getGroup()));
+        try (Writer writer = new FileWriter(file)) {
+            for (ContactData contact : contacts) {
+                writer.write(String.format("%s;%s;%s\n", contact.getName(), contact.getSurname(), contact.getGroup()));
+            }
         }
-        writer.close();
     }
 
     private List<ContactData> generateContacts(int count) {
