@@ -1,6 +1,8 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
+import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -20,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestBase{
 
   @DataProvider
-  public Iterator<Object[]> validContacts() throws IOException {
+  public Iterator<Object[]> validContactsFromXml() throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
       String xml = "";
       String line = reader.readLine();
@@ -34,22 +36,35 @@ public class ContactCreationTests extends TestBase{
       return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
     }
   }
+  @DataProvider
+  public Iterator<Object[]> validContactsFromJson() throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+      return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
+    }
+  }
 
-  @Test (dataProvider = "validContacts")
-  public void testContactCreation(int id, String name, String surname, String group) throws Exception {
-
+  @Test (dataProvider = "validContactsFromJson")
+  public void testContactCreation(ContactData contact) throws Exception {
     Contacts before = app.contact().all();
     File photo = new File("src/test/resources/avatar.png");
-    ContactData contact = new ContactData().
-            withId(id)
+/*    ContactData contact = new ContactData(contact)
+            .withId(id)
             .withName(name).withSurname(surname)
-/*           .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
+           .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
             .withAddress("123 Street House")
             .withEmail1("test@test.com").withEmail2("test2@").withEmail3("test")
-            .withDay("1").withMonth("February").withYear("1990")*/
+            .withDay("1").withMonth("February").withYear("1990")
              .withPhoto(photo)
             .withGroup(group)
-            ;
+            ;*/
     app.contact().create(contact,true);
     Contacts after = app.contact().all();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
