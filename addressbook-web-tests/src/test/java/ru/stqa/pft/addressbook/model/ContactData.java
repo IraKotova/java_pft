@@ -78,7 +78,7 @@ public class ContactData {
     }
 
     public String getJobtitle() {
-        return jobtitle;
+            return jobtitle;
     }
 
     public String getCompanyname() {
@@ -110,23 +110,23 @@ public class ContactData {
     }
 
     public String getDay() {
-        return day;
+            return day;
     }
 
     public String getMonth() {
-        return month;
+            return month;
     }
 
     public String getYear() {
-        return year;
+            return year;
     }
 
     public String getGroup() {
-        return group;
+            return group;
     }
 
     public String getAllPhones() {
-        return allPhones;
+            return allPhones;
     }
 
     public String getAddress() {
@@ -134,7 +134,7 @@ public class ContactData {
     }
 
     public String getAllEmails() {
-        return allEmails;
+            return allEmails;
     }
 
     public File getPhoto() {

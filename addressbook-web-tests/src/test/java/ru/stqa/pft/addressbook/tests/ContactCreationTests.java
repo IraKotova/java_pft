@@ -75,7 +75,7 @@ public class ContactCreationTests extends TestBase{
 
   @Test (enabled = false)
   public void testBadContactCreation() throws Exception {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData contact = new ContactData().
             withName("Ivan'").withSurname("Ivanov")
             .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
@@ -84,7 +84,7 @@ public class ContactCreationTests extends TestBase{
             .withDay("1").withMonth("February").withYear("1990").withGroup("test1");
     app.contact().create(contact,true);
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before));
   }
 

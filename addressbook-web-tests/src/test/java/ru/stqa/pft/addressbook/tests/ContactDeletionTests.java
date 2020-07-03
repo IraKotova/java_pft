@@ -11,9 +11,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactDeletionTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
+        if (app.db().contacts().size() == 0){
         app.goTo().homePage();
-        if (app.contact().all().size() == 0){
-            app.contact().create(new ContactData().
+        app.contact().create(new ContactData().
                     withName("Ivan").withSurname("Ivanov").withJobtitle("tester").withCompanyname("Testcom").withHomePhone("8123456789").withEmail1("test@test.com").
                     withDay("1").withMonth("February").withYear("1990").withGroup("test1"),true);
         }
@@ -21,12 +21,12 @@ public class ContactDeletionTests extends TestBase {
 
     @Test (enabled = true)
     public void testContactCreation() throws Exception {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
         app.goTo().homePage();
         assertThat(app.contact().count(), equalTo(before.size() - 1));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.without(deletedContact)));
     }
 }
