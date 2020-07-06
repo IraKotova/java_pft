@@ -49,9 +49,6 @@ public class ContactHelper extends HelperBase {
             new Select(wd.findElement(locator)).selectByVisibleText(param);
             wd.findElement(locator).click();
         }
-        else {
-            return;
-        }
     }
 
     public void returnToHomePage() {
