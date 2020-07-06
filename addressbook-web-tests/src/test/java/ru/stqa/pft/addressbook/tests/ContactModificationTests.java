@@ -20,7 +20,7 @@ public class ContactModificationTests extends TestBase {
                     //.withAddress("123 Street House")
                     // .withEmail1("test@test.com").withEmail2("test2@").withEmail3("test")
                     // .withDay("1").withMonth("February").withYear("1990")
-                    .withGroup("test1"),true);
+                    .withGroup("test 2"),true);
         }
     }
 
@@ -33,5 +33,6 @@ public class ContactModificationTests extends TestBase {
         Contacts after = app.db().contacts();
         assertThat(app.contact().count(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+        verifyContactListUI();
     }
 }
