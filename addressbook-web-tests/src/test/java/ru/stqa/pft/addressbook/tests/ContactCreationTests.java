@@ -7,6 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,22 +54,12 @@ public class ContactCreationTests extends TestBase{
 
   @Test (dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
-    Contacts before = app.contact().all();
+    Groups groups = app.db().groups();
     File photo = new File("src/test/resources/avatar.png");
-/*    ContactData contact = new ContactData(contact)
-            .withId(id)
-            .withName(name).withSurname(surname)
-           .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
-            .withAddress("123 Street House")
-            .withEmail1("test@test.com").withEmail2("test2@").withEmail3("test")
-            .withDay("1").withMonth("February").withYear("1990")
-             .withPhoto(photo)
-            .withGroup(group)
-            ;*/
-    app.contact().create(contact,true);
-    Contacts after = app.contact().all();
+    Contacts before = app.db().contacts();
+    app.contact().create(contact.withPhoto(photo).inGroup(groups.iterator().next()),true);
+    Contacts after = app.db().contacts();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-//    contact.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
     verifyContactListUI();
@@ -78,11 +69,7 @@ public class ContactCreationTests extends TestBase{
   public void testBadContactCreation() throws Exception {
     Contacts before = app.db().contacts();
     ContactData contact = new ContactData().
-            withName("Ivan'").withSurname("Ivanov")
-            .withJobtitle("tester").withCompanyname("Testcom").withHomePhone("123").withMobilePhone("456").withWorkPhone("789")
-            .withAddress("123 Street House")
-            .withEmail1("test@test.com").withEmail2("test2@").withEmail3("test")
-            .withDay("1").withMonth("February").withYear("1990").withGroup("test1");
+            withName("Ivan'").withSurname("Ivanov");
     app.contact().create(contact,true);
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
