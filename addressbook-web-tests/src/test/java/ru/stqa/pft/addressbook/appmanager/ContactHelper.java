@@ -54,6 +54,10 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    public void contactSelectById(int id) {
+        wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
+    }
+
     public void returnToHomePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
@@ -90,6 +94,14 @@ public class ContactHelper extends HelperBase {
 
     public void selectContact(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
+    public int selectContact() {
+        //wd.findElement(By.name("selected[]")).click();
+        int id = Integer.parseInt(wd.findElement(By.name("selected[]")).getAttribute("id"));
+        contactSelectById(id);
+        return id;
+        //   wd.findElement(By.name("add")).click();
     }
 
     public void selectContactById(int id) {
@@ -148,6 +160,25 @@ public class ContactHelper extends HelperBase {
 
     public int count() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public void ContactFilter() {
+        wd.findElement(By.name("group")).click();
+        new org.openqa.selenium.support.ui.Select(wd.findElement(By.name("group"))).selectByVisibleText("[none]");
+        wd.findElement(By.cssSelector("option[value=\"[none]\"]")).click();
+    }
+
+    public void filterContactsInGroups(int groupID) {
+        wd.findElement(By.name("group")).click();
+        new org.openqa.selenium.support.ui.Select(wd.findElement(By.name("group"))).selectByValue(Integer.toString(groupID));
+    }
+
+    public void submitAddingContact() {
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void submitContactRemoving() {
+        wd.findElement(By.name("remove")).click();
     }
 
 /*    public List<ContactData> list() {

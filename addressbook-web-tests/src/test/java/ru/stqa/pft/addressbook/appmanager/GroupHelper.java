@@ -82,6 +82,10 @@ public class GroupHelper extends HelperBase{
         returnToGroupPage();
     }
 
+    public int getGroupID() {
+        int groupID = Integer.parseInt( wd.findElement(By.name("selected[]")).getAttribute("value"));
+        return groupID;
+    }
 
     public boolean isThereAGroup() {
         return isElementPresent(By.name("selected[]"));
