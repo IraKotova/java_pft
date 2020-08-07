@@ -7,10 +7,13 @@ dependencies {
     implementation 'org.testng:testng:7.1.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-5'
     implementation 'org.hamcrest:hamcrest:2.2'
+    implementation 'commons-net:commons-net:3.4'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.12'
+    compile 'org.subethamail:subethasmtp:3.1.7'
+    compile 'ru.lanwen.verbalregex:java-verbal-expressions:1.6'
 }
 test {
     useTestNG() {
-        suites 'src/test/resources/testng-groups.xml'
     }
     if (project.hasProperty('browser')) {
         systemProperty 'browser', "${browser}"
